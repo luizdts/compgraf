@@ -1,7 +1,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
-
+// gcc -o planet planet.c -lm -lGL -lGLU -lglut
 static int year = 0, day = 0;
 static int yearEarth = 0, dayEarth = 0;
 static int yearMercurio = 0, dayMercurio = 0;
@@ -11,12 +11,17 @@ static int yearMoon = 0;
 static int yearJupiter = 0, dayJupiter = 0, yearSaturno = 0, daySaturno = 0;
 static int yearUrano = 0, dayUrano = 0, yearNetuno = 0, dayNetuno = 0;
 static int yearPluto = 0, dayPluto = 0;
+static GLfloat spin = 0.0;
+GLuint tex;
+GLUquadric* sphere;
 
 void init(void) 
 {
    GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
+
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel (GL_FLAT);
+   glEnable(GL_TEXTURE_2D);
 
 }
 
@@ -24,18 +29,29 @@ void display(void)
 {
    glClear (GL_COLOR_BUFFER_BIT);
    glColor3f (1.0, 1.0, 0.0);
-
+   
    glPushMatrix();
-   glRotatef((GLfloat) day, 0.0, 1.0, 0.0);
-   glutWireSphere(5.0, 50, 16);   /* draw sun */
+
+   glTranslatef(0.0, 0.0,-2.0);
+   glRotatef((GLfloat) day, 0, 1, 0);
+   glColor3f(1.0,1.0,0.0);
+   gluQuadricDrawStyle(sphere, GLU_FILL);
+   glBindTexture(GL_TEXTURE_2D, tex);
+   gluQuadricTexture(sphere, GL_TRUE);
+   gluQuadricNormals(sphere, GLU_FLAT);
+   gluSphere(sphere, 5, 50, 50);
    glPopMatrix();
 
    glPushMatrix();
-   glRotatef ((GLfloat) yearMercurio, 0.0, 1.0, 0.0);
+   glRotatef ((GLfloat) yearMercurio, 0.0, 1.0, 0.0); // define orbita
    glTranslatef (6.5, 0.0, 0.0);
    glRotatef ((GLfloat) dayMercurio, 0.0, 1.0, 0.0);
    glColor3f(1.0, 0.0, 0.0);
-   glutWireSphere(0.07, 10, 8);    /* mercurio */
+   gluQuadricDrawStyle(sphere, GLU_FILL);
+   glBindTexture(GL_TEXTURE_2D, tex);
+   gluQuadricTexture(sphere, GL_TRUE);
+   gluQuadricNormals(sphere, GLU_FLAT);
+   gluSphere(sphere, 0.07, 50, 50);
    glPopMatrix();
 
    glPushMatrix();
@@ -43,7 +59,11 @@ void display(void)
    glTranslatef (7.5, 0.0, 0.0);
    glRotatef ((GLfloat) dayVenus, 0.0, 1.0, 0.0);
    glColor3f(0.0, 1.0, 0.0);
-   glutWireSphere(0.1, 10, 8);    /* venus */
+   gluQuadricDrawStyle(sphere, GLU_FILL);
+   glBindTexture(GL_TEXTURE_2D, tex);
+   gluQuadricTexture(sphere, GL_TRUE);
+   gluQuadricNormals(sphere, GLU_FLAT);
+   gluSphere(sphere, 0.1, 50, 50);
    glPopMatrix();
    
    glPushMatrix();
@@ -51,7 +71,11 @@ void display(void)
    glTranslatef (9.0, 0.0, 0.0);
    glRotatef ((GLfloat) dayEarth, 0.0, 1.0, 0.0);
    glColor3f(0.0, 0.0, 1.0);
-   glutWireSphere(0.2, 10, 8); /* terra */
+   gluQuadricDrawStyle(sphere, GLU_FILL);
+   glBindTexture(GL_TEXTURE_2D, tex);
+   gluQuadricTexture(sphere, GL_TRUE);
+   gluQuadricNormals(sphere, GLU_FLAT);
+   gluSphere(sphere, 0.2, 50, 50);
    glPopMatrix();
 
    glPushMatrix();
@@ -59,7 +83,11 @@ void display(void)
    glTranslatef (9.5, 0.0, 0.0);
    glRotatef ((GLfloat) dayEarth, 0.0, 1.0, 0.0);
    glColor3f(1.0, 1.0, 1.0);
-   glutWireSphere(0.05, 10, 8);    /* lua  */
+   gluQuadricDrawStyle(sphere, GLU_FILL);
+   glBindTexture(GL_TEXTURE_2D, tex);
+   gluQuadricTexture(sphere, GL_TRUE);
+   gluQuadricNormals(sphere, GLU_FLAT);
+   gluSphere(sphere, 0.05, 50, 50);
    glPopMatrix();
 
    glPushMatrix();
@@ -67,7 +95,11 @@ void display(void)
    glTranslatef (11.0, 0.0, 0.0);
    glRotatef ((GLfloat) dayMarte, 0.0, 1.0, 0.0);
    glColor3f(1.0, 0.5, 0.0);
-   glutWireSphere(0.27, 10, 8);    /* marte */
+   gluQuadricDrawStyle(sphere, GLU_FILL);
+   glBindTexture(GL_TEXTURE_2D, tex);
+   gluQuadricTexture(sphere, GL_TRUE);
+   gluQuadricNormals(sphere, GLU_FLAT);
+   gluSphere(sphere, 0.27, 50, 50);
    glPopMatrix();
 
    glPushMatrix();
@@ -75,7 +107,11 @@ void display(void)
    glTranslatef (20.0, 0.0, 0.0);
    glRotatef ((GLfloat) dayJupiter, 0.0, 1.0, 0.0);
    glColor3f(1.0, 0.5, 1.0);
-   glutWireSphere(2.0, 10, 8);    /* jupiter */
+   gluQuadricDrawStyle(sphere, GLU_FILL);
+   glBindTexture(GL_TEXTURE_2D, tex);
+   gluQuadricTexture(sphere, GL_TRUE);
+   gluQuadricNormals(sphere, GLU_FLAT);
+   gluSphere(sphere, 2, 50, 50);
    glPopMatrix();
 
    glPushMatrix();
@@ -83,34 +119,78 @@ void display(void)
    glTranslatef (30.0, 0.0, 0.0);
    glRotatef ((GLfloat) daySaturno, 0.0, 1.0, 0.0);
    glColor3f(1.0, 0.8, 0.0);
-   glutWireSphere(1.8, 10, 8);    /* saturno */
+   gluQuadricDrawStyle(sphere, GLU_FILL);
+   glBindTexture(GL_TEXTURE_2D, tex);
+   gluQuadricTexture(sphere, GL_TRUE);
+   gluQuadricNormals(sphere, GLU_FLAT);
+   gluSphere(sphere, 1.8, 50, 50);
    glPopMatrix();
 
    glPushMatrix();
    glRotatef ((GLfloat) yearUrano, 0.0, 1.0, 0.0);
-   glTranslatef (45.0, 0.0, 0.0);
+   glTranslatef (40.0, 0.0, 0.0);
    glRotatef ((GLfloat) dayUrano, 0.0, 1.0, 0.0);
    glColor3f(1.0, 1.0, 0.7);
-   glutWireSphere(1.3, 10, 8);    /* urano */
+   gluQuadricDrawStyle(sphere, GLU_FILL);
+   glBindTexture(GL_TEXTURE_2D, tex);
+   gluQuadricTexture(sphere, GL_TRUE);
+   gluQuadricNormals(sphere, GLU_FLAT);
+   gluSphere(sphere, 1.3, 50, 50);
    glPopMatrix();
 
    glPushMatrix();
    glRotatef ((GLfloat) yearNetuno, 0.0, 1.0, 0.0);
-   glTranslatef (55.0, 0.0, 0.0);
+   glTranslatef (50.0, 0.0, 0.0);
    glRotatef ((GLfloat) dayNetuno, 0.0, 1.0, 0.0);
    glColor3f(0.0, 0.0, 1.0);
-   glutWireSphere(1.2, 10, 8);    /* netuno */
+   gluQuadricDrawStyle(sphere, GLU_FILL);
+   glBindTexture(GL_TEXTURE_2D, tex);
+   gluQuadricTexture(sphere, GL_TRUE);
+   gluQuadricNormals(sphere, GLU_FLAT);
+   gluSphere(sphere, 1.2, 50, 50);
    glPopMatrix();
 
    glPushMatrix();
    glRotatef ((GLfloat) yearPluto, 0.0, 1.0, 0.0);
-   glTranslatef (65.0, 0.0, 0.0);
+   glTranslatef (60.0, 0.0, 0.0);
    glRotatef ((GLfloat) dayPluto, 0.0, 1.0, 0.0);
    glColor3f(1.0, 1.0, 1.0);
-   glutWireSphere(0.5, 10, 8);    /* pluto */
+   gluQuadricDrawStyle(sphere, GLU_FILL);
+   glBindTexture(GL_TEXTURE_2D, tex);
+   gluQuadricTexture(sphere, GL_TRUE);
+   gluQuadricNormals(sphere, GLU_FLAT);
+   gluSphere(sphere, 0.5, 10, 50);
    glPopMatrix();
-
+   
+   glPushMatrix();
    glutSwapBuffers();
+}
+
+void spinDisplay(void)
+{
+	     day = (day + 10) % 360;
+
+        dayMercurio = (dayMercurio + 25) % 360;
+        yearMercurio = (yearMercurio + 25) % 360;
+        dayVenus = (dayVenus + 15) % 360;
+        yearVenus = (yearVenus + 15) % 360;
+        dayMarte = (dayMarte + 9) % 360;
+        yearMarte = (yearMarte + 9) % 360;
+        dayEarth = (dayEarth + 10) % 360;
+        yearEarth = (yearEarth + 10) % 360;
+        yearMoon = (yearEarth) % 360;
+        // planetas gasosos são mais lentos
+        yearJupiter = (yearJupiter + 5) % 360;
+        dayJupiter = (dayJupiter + 5) % 360;
+        yearSaturno = (yearSaturno + 4) % 360;
+        daySaturno = (daySaturno + 4) % 360;
+        yearUrano = (yearUrano + 3) % 360;
+	     dayUrano = (dayUrano + 3) % 360;
+        yearNetuno = (yearNetuno + 2) % 360;
+        dayNetuno = (dayNetuno + 2) % 360;
+        yearPluto = (yearPluto + 1) % 360;
+        dayPluto = (dayPluto + 1) % 360;
+   	glutPostRedisplay();
 }
 
 void reshape (int w, int h)
@@ -121,9 +201,27 @@ void reshape (int w, int h)
    gluPerspective(90.0, (GLfloat) w/(GLfloat) h, 1.0, 200.0); //angulo
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-   gluLookAt (0.0, 30.0, 30.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0); // visao da camera
+   gluLookAt (0.0, 20.0, 20.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); // visao da camera
+   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);		//melhora a qualidade dos gráficos
 }
+////////////////////////
+void make_tex(void)
+{
+    unsigned char data[256][256][3];
+    for (int y = 0; y < 255; y++) {
+	for (int x = 0; x < 255; x++) {
+	    unsigned char *p = data[y][x];
+	    p[0] = p[1] = p[2] = (x ^ y) & 8 ? 255 : 0;
+	}
+    }
+    glGenTextures(1, &tex);
+    glBindTexture(GL_TEXTURE_2D, tex);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 256, 256, 0, GL_RGB, GL_UNSIGNED_BYTE, (const GLvoid *) data);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+}
+////////////////////////
 void keyboard (unsigned char key, int x, int y)
 {
    switch (key) {
@@ -140,22 +238,10 @@ void keyboard (unsigned char key, int x, int y)
          dayPluto = (dayPluto + 1) % 360;
          glutPostRedisplay();
          break;
-      case 'D':
-         day = (day - 10) % 360;
-         glutPostRedisplay();
-         break;
-      case 'y': /*y*/
-         year = (year + 5) % 360;
-         glutPostRedisplay();
-         break;
-      case 'Y':
-         year = (year - 5) % 360;
-         glutPostRedisplay();
-         break;
       case 'a':
          
          day = (day + 10) % 360;
-         //year = (year + 5) % 360;
+
          dayMercurio = (dayMercurio + 25) % 360;
          yearMercurio = (yearMercurio + 25) % 360;
          dayVenus = (dayVenus + 15) % 360;
@@ -178,32 +264,32 @@ void keyboard (unsigned char key, int x, int y)
          dayPluto = (dayPluto + 1) % 360;
          glutPostRedisplay();
          break;
+      case 'q':
+	   glutIdleFunc(spinDisplay);
+  	 break;
+      case 'w':
+	   glutIdleFunc(NULL);
+  	 break;
       default:
-         while(1){
-            yearMercurio = (yearMercurio + 25) % 360;
-            yearVenus = (yearVenus + 15) % 360;
-            yearMarte = (yearMarte + 9) % 360;
-            yearEarth = (yearEarth + 10) % 360;
-            yearMoon = (yearEarth) % 360;
-            yearJupiter = (yearJupiter + 5) % 360;
-            yearSaturno = (yearSaturno + 4) % 360;
-            yearUrano = (yearUrano + 3) % 360;
-            yearNetuno = (yearNetuno + 2) % 360;
-            yearPluto = (yearPluto + 1) % 360;
-         }
-
-         
+         break;
+        
    }
 }
 
 int main(int argc, char** argv)
 {
+   //
+   glEnable(GL_DEPTH_TEST);
+   make_tex();
+   sphere = gluNewQuadric();
+   glEnable(GL_TEXTURE_2D);
+   //
    glutInit(&argc, argv);
    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
-   glutInitWindowSize (1280, 720); 
-   glutInitWindowPosition (500, 500);
+   glutInitWindowSize (1920, 1080); 
+   glutInitWindowPosition (0, 0);
    glutCreateWindow (argv[0]);
-   init ();
+   init();
    glutDisplayFunc(display); 
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
